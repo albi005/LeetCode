@@ -13,41 +13,30 @@ public:
     bool backspaceCompare(string s, string t) {
         int i = s.size()-1, j = t.size()-1;
         char a, b;
-        int backsies;
-        while (i != 0 && j != 0)
+        int backsies = 0;
+        while (true)
         {
-            while (i >= 0 && s[i] == '#'){
-                backsies = 0;
-                while (i >= 0)
-                {
-                    a = s[i];
-                    if (a != '#') break;
-                    i--;
-                    backsies++;
+            while (i >= 0)
+            {
+                if (s[i] != '#' && backsies == 0) break;
+                if (s[i] == '#'){
+                    backsies += 2;
                 }
-                while (backsies > 0 && i > 0)
-                {
-                    i--;
-                    if (s[i] != '#') i--;
-                }                
+                i--;
+                backsies--;
             }
+            backsies = 0;
 
-            while (j >= 0 && t[j] == '#'){
-                backsies = 0;
-                while (j >= 0)
-                {
-                    b = t[j];
-                    if (b != '#') break;
-                    j--;
-                    backsies++;
+            while (j >= 0)
+            {
+                if (t[j] != '#' && backsies == 0) break;
+                if (t[j] == '#'){
+                    backsies += 2;
                 }
-                while (backsies > 0 && j > 0)
-                {
-                    j--;
-                    if (t[j] != '#') j--;
-                }
-                
+                j--;
+                backsies--;
             }
+            backsies = 0;
 
             if (i < 0 || j < 0) break;
 
@@ -59,13 +48,13 @@ public:
             j--;
         }
         
-        return i <= 0 && j <= 0;
+        return i < 0 && j < 0;
     }
 };
 
 int main(int argc, char const *argv[])
 {
-    auto result = (new Solution())->backspaceCompare("xywrrmp", "xywrrmu#p");
+    auto result = (new Solution())->backspaceCompare("a#c###", "ad#c");
     cout << result << "\n";
     return 0;
 }
